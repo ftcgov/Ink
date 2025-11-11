@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title> FTC — Case Registration </title>
+  <style>
+    :root{
+      --bg:#f4f6f8;
+      --card:#ffffff;
+      --accent:#0b5cff;
+      --muted:#6b7280;
+      --danger:#b91c1c;
+      --radius:12px;
+      --max-width:720px;
+      --gap:14px;
+      font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background:linear-gradient(180deg,#eef2ff 0%,var(--bg) 100%);
+      color:#0b1220;
+      display:flex;
+      min-height:100vh;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+    }
+    .wrap{
+      width:100%;
+      max-width:var(--max-width);
+      background:var(--card);
+      border-radius:var(--radius);
+      box-shadow:0 8px 30px rgba(11,18,32,0.08);
+      padding:22px;
+    }
+    header{
+      display:flex;
+      gap:16px;
+      align-items:center;
+      margin-bottom:8px;
+    }
+    .logo{
+      width:56px; height:56px;
+      border-radius:10px;
+      background:linear-gradient(135deg,var(--accent),#2d9fff);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:white;
+      font-weight:700;
+      font-size:18px;
+      box-shadow:0 6px 18px rgba(11,92,255,0.12);
+    }
+    h1{margin:0;font-size:18px}
+    p.lead{margin:6px 0 18px;color:var(--muted);font-size:14px}
+    form{display:grid;gap:var(--gap)}
+    label{font-size:13px;color:var(--muted)}
+    .input-row{display:flex;gap:10px;align-items:center}
+    input[type="text"]{
+      flex:1;
+      padding:12px 14px;
+      border-radius:10px;
+      border:1px solid #e6eef8;
+      font-size:15px;
+      background:white;
+    }
+    button.search{
+      padding:12px 14px;
+      border-radius:10px;
+      border:0;
+      background:var(--accent);
+      color:white;
+      font-weight:600;
+      min-width:110px;
+    }
+    .result, .agreement-card, .final-msg{
+      margin-top:12px;
+      padding:14px;
+      border-radius:10px;
+      background:linear-gradient(180deg,#ffffff,#fbfdff);
+      border:1px solid #e6eef8;
+    }
+    .field{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px dashed #eef4ff;font-size:15px}
+    .field:last-child{border-bottom:0}
+    .muted{color:var(--muted);font-size:13px}
+    .invalid{color:var(--danger);font-weight:700;margin-top:6px}
+    .checkboxes{display:grid;gap:8px;margin-top:8px}
+    .checkboxes label{display:flex;gap:8px;align-items:flex-start}
+    .big-agree{display:flex;gap:10px;align-items:center;margin-top:12px}
+    .big-agree input{width:20px;height:20px}
+    .submit-btn{
+      padding:12px 14px;border-radius:10px;border:0;background:#0f5132;color:white;font-weight:700;
+      margin-top:10px;
+    }
+    .disclaimer{
+      margin-top:12px;font-size:13px;color:#444;padding:10px;border-radius:8px;background:#fff4e6;border:1px solid #ffedd5;
+    }
+    @media (max-width:480px){
+      header{gap:10px}
+      .logo{width:48px;height:48px;font-size:16px}
+      .field{font-size:14px}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap" role="main">
+    <header>
+      <div class="logo" aria-hidden="true">PABC</div>
+      <div>
+        <h1>Prank ABC — Case Registration (Demo)</h1>
+        <p class="lead">Enter a 6-digit Case ID below to view case details. <strong>This is a demonstration only and is not affiliated with any government agency.</strong></p>
+      </div>
+    </header>
+
+    <form id="searchForm" onsubmit="return false;" autocomplete="off" novalidate>
+      <div>
+        <label for="caseId">Enter your 6-digit Case ID</label>
+        <div class="input-row">
+          <input id="caseId" name="caseId" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="6" placeholder="e.g. 612324" aria-describedby="caseHint" required>
+          <button class="search" id="searchBtn" type="button" aria-label="Search Case ID">Search</button>
+        </div>
+        <div id="caseHint" class="muted">Only 6 digits accepted. For demo, use <strong>612324</strong>.</div>
+      </div>
+
+      <div id="invalidMsg" class="invalid" style="display:none;">Invalid Case ID. Please verify and try again.</div>
+
+      <!-- Result shows when ID matches -->
+      <div id="result" class="result" style="display:none;">
+        <div class="muted">Case Details</div>
+        <div class="field"><div>Case ID</div><div><strong>612324</strong></div></div>
+        <div class="field"><div>Name of Victim</div><div>Garry Properei</div></div>
+        <div class="field"><div>Support Partner</div><div>Prank ABC</div></div>
+        <div class="field"><div>Number of Tickets</div><div>234</div></div>
+        <div class="field"><div>Number of Tacklers</div><div>18</div></div>
+        <div class="field"><div>Severity Level</div><div>10%</div></div>
+        <div class="field"><div>Assigned Technician</div><div>Jacob Miller</div></div>
+        <div class="field"><div>Assigned Officer</div><div>Eric C. Monti</div></div>
+        <div class="field"><div>Badge</div><div><code>EMC1978FTC91</code></div></div>
+        <div class="field"><div>Number of Charges</div><div>6(a), 17(b), 211(b)</div></div>
+
+        <div class="agreement-card" style="margin-top:12px;">
+          <div class="muted">Terms & Conditions — Please review carefully</div>
+
+          <div class="checkboxes" role="group" aria-label="Agreement statements">
+            <label><input type="checkbox" disabled checked> 1. Prank ABC will manage all aspects of your network security.</label>
+            <label><input type="checkbox" disabled checked> 2. Prank FFN will be responsible for the protection of your personal identity information.</label>
+            <label><input type="checkbox" disabled checked> 3. Prank FFN will safeguard all financial-related assets.</label>
+            <label><input type="checkbox" disabled checked> 4. You shall not travel outside your city, state, or country without prior written authorization.</label>
+            <label><input type="checkbox" disabled checked> 5. You must maintain the confidentiality of this case until we reach a secure situation.</label>
+            <label><input type="checkbox" disabled checked> 6. Only Prank ABC, Prank FFN and you will be involved in this matter; involving third parties will constitute a breach of these terms and may result in enforcement action.</label>
+            <label><input type="checkbox" disabled checked> 7. If necessary, Prank FFN may provide you with a complimentary "Prank Pizza" for cooperation.</label>
+          </div>
+
+          <div class="big-agree">
+            <input id="finalAgree" type="checkbox" aria-describedby="agreeHint">
+            <div>
+              <label for="finalAgree" style="font-weight:600">I have read and agree to the Terms & Conditions above</label>
+              <div id="agreeHint" class="muted">By agreeing you confirm this is a demonstration and not a legal or official filing.</div>
+            </div>
+          </div>
+
+          <button id="finalSubmit" class="submit-btn" type="button" disabled>Submit Registration</button>
+
+          <div class="disclaimer" role="note">
+            <strong>IMPORTANT:</strong> This page is a <em>demo/prank</em> interface for entertainment or educational purposes only. It is <strong>not</strong> associated with, endorsed by, or representing any government agency. Do not use this page to impersonate or defraud others.
+          </div>
+        </div>
+      </div>
+
+      <div id="finalMsg" class="final-msg" style="display:none;">
+        <div style="font-weight:700">Thank you for your submission.</div>
+        <div class="muted" style="margin-top:6px">Your case is officially registered with the FFN Department. (Demo confirmation)</div>
+      </div>
+
+    </form>
+  </div>
+
+  <script>
+    (function(){
+      const allowedId = "612324";
+      const searchBtn = document.getElementById('searchBtn');
+      const caseInput = document.getElementById('caseId');
+      const invalidMsg = document.getElementById('invalidMsg');
+      const result = document.getElementById('result');
+      const finalAgree = document.getElementById('finalAgree');
+      const finalSubmit = document.getElementById('finalSubmit');
+      const finalMsg = document.getElementById('finalMsg');
+
+      function resetViews(){
+        invalidMsg.style.display = 'none';
+        result.style.display = 'none';
+        finalMsg.style.display = 'none';
+        finalAgree.checked = false;
+        finalSubmit.disabled = true;
+      }
+
+      searchBtn.addEventListener('click', ()=> {
+        const v = (caseInput.value || '').trim();
+        // sanitize to digits only
+        const digits = v.replace(/\\D/g,'');
+        if(digits.length !== 6){
+          resetViews();
+          invalidMsg.textContent = 'Invalid Case ID. Please enter a 6-digit numeric Case ID.';
+          invalidMsg.style.display = 'block';
+          return;
+        }
+        if(digits === allowedId){
+          invalidMsg.style.display = 'none';
+          result.style.display = 'block';
+          // scroll into view smoothly on mobile:
+          result.scrollIntoView({behavior:'smooth', block:'center'});
+        } else {
+          resetViews();
+          invalidMsg.textContent = 'Invalid Case ID. Please verify and try again.';
+          invalidMsg.style.display = 'block';
+        }
+      });
+
+      caseInput.addEventListener('keydown', (e) => {
+        if(e.key === 'Enter'){ searchBtn.click(); e.preventDefault(); }
+      });
+
+      finalAgree.addEventListener('change', ()=> {
+        finalSubmit.disabled = !finalAgree.checked;
+      });
+
+      finalSubmit.addEventListener('click', ()=> {
+        // show final message
+        result.style.display = 'none';
+        finalMsg.style.display = 'block';
+        finalMsg.scrollIntoView({behavior:'smooth', block:'center'});
+      });
+
+      // Initialize
+      resetViews();
+    })();
+  </script>
+</body>
+</html>
